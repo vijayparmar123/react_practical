@@ -5,6 +5,9 @@ import logo from './logo.svg';
 import './App.css';
 import { AppBar, Box } from '@mui/material';
 
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+
 import Toolbar from '@mui/material/Toolbar';
 
 const theme = createTheme({
@@ -22,7 +25,15 @@ function App() {
       <AppBar position="static">
 
       <Toolbar>
-
+      <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
       </Toolbar>
       </AppBar>
       </Box>  
