@@ -1,24 +1,32 @@
+import * as React from 'react';
+import { red } from '@mui/material/colors';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import logo from './logo.svg';
 import './App.css';
+import { AppBar, Box } from '@mui/material';
+
+import Toolbar from '@mui/material/Toolbar';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: red[500],
+    },
+  },
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+
+      <Toolbar>
+
+      </Toolbar>
+      </AppBar>
+      </Box>  
+    </ThemeProvider>
   );
 }
 
