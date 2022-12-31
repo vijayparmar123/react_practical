@@ -1,14 +1,11 @@
-import * as React from 'react';
-import { red } from '@mui/material/colors';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import logo from './logo.svg';
-import './App.css';
-import { AppBar, Box } from '@mui/material';
+import * as React from "react";
 
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-
-import Toolbar from '@mui/material/Toolbar';
+import "./App.css";
+import Topbar from "./views/Topbar";
+import ErrorBoundary from "./ErrorBoundary";
+import { red } from "@mui/material/colors";
+import { AppBar, Box } from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
   palette: {
@@ -20,24 +17,15 @@ const theme = createTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-
-      <Toolbar>
-      <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-      </Toolbar>
-      </AppBar>
-      </Box>  
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider theme={theme}>
+        <Box sx={{ flexGrow: 1 }}>
+          <AppBar position="static">
+            <Topbar></Topbar>
+          </AppBar>
+        </Box>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
 
