@@ -1,10 +1,12 @@
 import * as React from "react";
 
+import { Provider } from "react-redux";
 import "./App.css";
 import Topbar from "./views/Topbar";
 import ErrorBoundary from "./ErrorBoundary";
 import { Box } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import store from "./redux/stores";
 
 const theme = createTheme({
   typography: {
@@ -23,6 +25,7 @@ const theme = createTheme({
 
 function App() {
   return (
+    <Provider store={store}>
     <ErrorBoundary>
       <ThemeProvider theme={theme}>
         
@@ -30,6 +33,7 @@ function App() {
             <Topbar></Topbar>
       </ThemeProvider>
     </ErrorBoundary>
+    </Provider>
   );
 }
 

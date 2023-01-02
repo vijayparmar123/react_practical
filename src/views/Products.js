@@ -12,16 +12,13 @@ import ShopImage from "../assets/images/shops/shop.svg";
 import AddressIcon from "../assets/images/shops/address.svg";
 import StarIcon from "../assets/images/shops/star.svg";
 
+import { useLocation } from 'react-router-dom';
+
 import { alpha } from "@mui/material/styles";
 
-import { createSearchParams, useNavigate } from 'react-router-dom';
-
 import InputBase from "@mui/material/InputBase";
-
-import { useDispatch, useSelector } from 'react-redux';
-import { GetShops } from '../redux/actions/ShopsActions'
-import { useEffect } from "react";
-
+import { useSelector } from "react-redux";
+import { useState } from "react";
 
 const gridContainer = {
   height: "100%",
@@ -151,40 +148,22 @@ const Rating = styled("div")(({ theme }) => ({
 const StarImages = () => {
   return (
     <div>
-      {[...Array(5)].map((star,index) => {
-        return <img src={StarIcon} height="15px" width="15px" alt="star" key={index}/>;
+      {[...Array(5)].map((star) => {
+        return <img src={StarIcon} height="15px" width="15px" alt="star" />;
       })}
     </div>
   );
 };
 
-function Default() {
+function Products() {
+  const location = useLocation();
+  const paramShopId = location.state.shopId;
   
   const shops = useSelector((state) => state.shops)
 
-  const navigate = useNavigate();
-
-  const ShopList = shops.shops.map( (item) => (
-    <Grid item xs={12} sm={3} key={item.id}>
-          <Shops>
-            <img src={ShopImage} alt="send" />
-            <ShopName>{item.name}</ShopName>
-            <Address>
-              <img src={AddressIcon} height="15px" width="15px" alt="address" />
-              Castle Hill, NSW AU 2154
-            </Address>
-            <Rating>
-              <Grid container>
-                <Grid item sm={6} xs={6}><StarImages/></Grid>
-                <Grid item sm={6} xs={6}>{item.review}</Grid>
-              </Grid>
-              
-            </Rating>
-            
-            <button type="button" style={{ padding: "5px", marginTop: '5px', width: "200px", backgroundColor:"#43B028", border:0, borderRadius:"30px" }}  onClick={()=> navigate('/products',{state:{shopId:item.id}})}>View All Items</button>
-          </Shops>
-        </Grid>
-))
+  const selectedShop = shops.shops.find((shop) => {
+    return shop.id === paramShopId;
+  })
 
   return (
     <Grid container sx={{ ...gridContainer }}>
@@ -198,7 +177,7 @@ function Default() {
           backgroundSize: "cover",
         }}
       >
-        <ContentBox>
+        {/* <ContentBox>
           <Box sx={{ fontSize: "40px", color: "#FFFFFF", fontWeight: "600" }}>
             Shop from your favourite
           </Box>
@@ -210,9 +189,9 @@ function Default() {
             <Input placeholder="i am shopping for..." />
             <SearchButton type="button">Search</SearchButton>
           </InputWithButton>
-        </ContentBox>
+        </ContentBox> */}
       </Grid>
-      <Grid container spacing={2} sx={{ marginTop: "-30px" }}>
+      {/* <Grid container spacing={2} sx={{ marginTop: "-30px" }}>
         <Grid item xs={2}>
           <Item>All</Item>
         </Grid>
@@ -231,12 +210,11 @@ function Default() {
         <Grid item xs={2}>
           <Item>Dairy & Eggs</Item>
         </Grid>
-      </Grid>
+      </Grid> */}
 
       <Grid container spacing={2} sx={{ marginTop: "10px" }}>
-      { ShopList }
-        {/* <Grid item xs={12} sm={3}>
-        <Shops>
+        <Grid item xs={12} sm={3}>
+          <Shops>
             <img src={ShopImage} alt="send" />
             <ShopName>Chemist Warehouse</ShopName>
             <Address>
@@ -250,6 +228,8 @@ function Default() {
               </Grid>
               
             </Rating>
+            
+            <button type="button" style={{ padding: "5px", marginTop: '5px', width: "200px", backgroundColor:"#43B028", border:0, borderRadius:"30px" }}>View All Items</button>
           </Shops>
         </Grid>
         <Grid item xs={12} sm={3}>
@@ -319,10 +299,27 @@ function Default() {
               
             </Rating>
           </Shops>
-        </Grid> */}
+        </Grid>
+        <Grid item xs={12} sm={3}>
+        <Shops>
+            <img src={ShopImage} alt="send" />
+            <ShopName>Chemist Warehouse</ShopName>
+            <Address>
+              <img src={AddressIcon} height="15px" width="15px" alt="address" />
+              Castle Hill, NSW AU 2154
+            </Address>
+            <Rating>
+              <Grid container>
+                <Grid item sm={6} xs={6}><StarImages/></Grid>
+                <Grid item sm={6} xs={6}>56 reviews</Grid>
+              </Grid>
+              
+            </Rating>
+          </Shops>
+        </Grid>
       </Grid>
     </Grid>
   );
 }
 
-export default Default;
+export default Products;
