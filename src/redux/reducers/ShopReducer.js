@@ -12,37 +12,37 @@ const initialState = {
         {
           id: 1,
           name: "Lemon",
-          price: "$2.47",
+          price: "2.47",
           perkg: "$10.29/KG"
         },
         {
           id: 2,
           name: "Green Seedless Grapes",
-          price: "$3.49",
+          price: "3.49",
           perkg: "$10.99/KG"
         },
         {
           id: 3,
           name: "Pineapple",
-          price: "$4.85",
+          price: "4.85",
           perkg: "$48.50/KG"
         },
         {
           id: 4,
           name: "Oranges",
-          price: "$3.47",
+          price: "3.47",
           perkg: "$11.29/KG"
         },
         {
           id: 5,
           name: "Zuccini Black Organic(Each)",
-          price: "$2.47",
+          price: "2.47",
           perkg: "$10.29/KG"
         },
         {
           id: 6,
           name: "Zuccini Black Imperfect Pick Value Rang(Each)",
-          price: "$2.50",
+          price: "2.50",
           perkg: "$4.99/KG"
         }
       ]

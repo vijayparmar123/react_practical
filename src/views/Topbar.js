@@ -18,6 +18,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import SendIcon from "../assets/images/topbar/send.svg";
 import CartIcon from "../assets/images/topbar/cart.svg";
 import Pages from "./Pages";
+import ShoppingCart from "./ShoppingCart";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -205,7 +206,8 @@ function Topbar() {
               color="inherit"
             >
               <Badge badgeContent={4} color="error">
-                <img src={CartIcon} alt="send" />
+                {/* <img src={CartIcon} alt="send" /> */}
+                <ShoppingCart />
               </Badge>
             </IconButton>
           </Box>

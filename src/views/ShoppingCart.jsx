@@ -1,25 +1,25 @@
 import { Badge, Button, Drawer, Icon, IconButton, ThemeProvider } from '@mui/material';
 import { Box, styled, useTheme } from '@mui/system';
-import useAuth from 'app/hooks/useAuth';
-import useSettings from 'app/hooks/useSettings';
-import {
-  deleteProductFromCart,
-  getCartList,
-  updateCartAmount,
-} from 'app/redux/actions/EcommerceActions';
-import { sideNavWidth, topBarHeight } from 'app/utils/constant';
+// import useAuth from 'app/hooks/useAuth';
+// import useSettings from 'app/hooks/useSettings';
+// import {
+//   deleteProductFromCart,
+//   getCartList,
+//   updateCartAmount,
+// } from 'app/redux/actions/EcommerceActions';
+// import { sideNavWidth, topBarHeight } from 'app/utils/constant';
 import { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { themeShadows } from './MatxTheme/themeColors';
-import { H6, Small } from './Typography';
+// import { themeShadows } from './MatxTheme/themeColors';
+// import { H6, Small } from './Typography';
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   '& span': {
-    color: theme.palette.text.primary,
+    color: "red",
   },
   '& #disable': {
-    color: theme.palette.text.disabled,
+    color: "black",
   },
 }));
 
@@ -82,11 +82,11 @@ function ShoppingCart({ container }) {
   const [panelOpen, setPanelOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useAuth();
-  const { cartList } = useSelector((state) => state.ecommerce);
-  const { settings } = useSettings();
-  const theme = useTheme();
-  const secondary = theme.palette.text.secondary;
+  // const { user } = useAuth();
+  const { cartList } = useSelector((state) => state.shops);
+  // const { settings } = useSettings();
+  // const theme = useTheme();
+  // const secondary = theme.palette.text.secondary;
 
   if (!cartListLoaded) {
     dispatch(getCartList(user.id));
@@ -113,8 +113,8 @@ function ShoppingCart({ container }) {
     setTotalCost(total);
   }, [cartList]);
 
-  const { palette } = useTheme();
-  const textColor = palette.text.primary;
+  // const { palette } = useTheme();
+  // const textColor = palette.text.primary;
 
   return (
     <Fragment>
@@ -124,7 +124,7 @@ function ShoppingCart({ container }) {
         </Badge>
       </IconButton>
 
-      <ThemeProvider theme={settings.themes[settings.activeTheme]}>
+      {/* <ThemeProvider theme={settings.themes[settings.activeTheme]}> */}
         <Drawer
           container={container}
           variant="temporary"
@@ -192,7 +192,7 @@ function ShoppingCart({ container }) {
             </Button>
           </MiniCart>
         </Drawer>
-      </ThemeProvider>
+      {/* </ThemeProvider> */}
     </Fragment>
   );
 }
