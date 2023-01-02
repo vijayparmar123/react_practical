@@ -8,20 +8,28 @@ import {
   Paper,
 } from "@mui/material";
 import BackgroundImage from "../assets/images/search/backgroundImage.svg";
-import ShopImage from "../assets/images/shops/shop.svg";
 import AddressIcon from "../assets/images/shops/address.svg";
 import StarIcon from "../assets/images/shops/star.svg";
 
 import { alpha } from "@mui/material/styles";
 
-import { createSearchParams, useNavigate } from 'react-router-dom';
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 import InputBase from "@mui/material/InputBase";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { GetShops } from '../redux/actions/ShopsActions'
+import { useDispatch, useSelector } from "react-redux";
+import { GetShops } from "../redux/actions/ShopsActions";
 import { useEffect } from "react";
 
+import chemistImage from "../assets/images/shops/chemist.svg";
+import coles from "../assets/images/shops/coles.svg";
+import costi from "../assets/images/shops/costi.svg";
+import familymart from "../assets/images/shops/familymart.svg";
+import harris from "../assets/images/shops/harris.svg";
+import kmart from "../assets/images/shops/kmart.svg";
+import robin from "../assets/images/shops/robin.svg";
+import supermarket from "../assets/images/shops/supermarket.svg";
+import shopImage from "../assets/images/shops/shop.svg";
 
 const gridContainer = {
   height: "100%",
@@ -151,40 +159,63 @@ const Rating = styled("div")(({ theme }) => ({
 const StarImages = () => {
   return (
     <div>
-      {[...Array(5)].map((star,index) => {
-        return <img src={StarIcon} height="15px" width="15px" alt="star" key={index}/>;
+      {[...Array(5)].map((star, index) => {
+        return (
+          <img
+            src={StarIcon}
+            height="15px"
+            width="15px"
+            alt="star"
+            key={index}
+          />
+        );
       })}
     </div>
   );
 };
 
 function Default() {
-  
-  const shops = useSelector((state) => state.shops)
+  const shops = useSelector((state) => state.shops);
 
   const navigate = useNavigate();
 
-  const ShopList = shops.shops.map( (item) => (
+  const ShopList = shops.shops.map((item) => (
     <Grid item xs={12} sm={3} key={item.id}>
-          <Shops>
-            <img src={ShopImage} alt="send" />
-            <ShopName>{item.name}</ShopName>
-            <Address>
-              <img src={AddressIcon} height="15px" width="15px" alt="address" />
-              Castle Hill, NSW AU 2154
-            </Address>
-            <Rating>
-              <Grid container>
-                <Grid item sm={6} xs={6}><StarImages/></Grid>
-                <Grid item sm={6} xs={6}>{item.review}</Grid>
-              </Grid>
-              
-            </Rating>
-            
-            <button type="button" style={{ padding: "5px", marginTop: '5px', width: "200px", backgroundColor:"#43B028", border:0, borderRadius:"30px" }}  onClick={()=> navigate('/products',{state:{shopId:item.id}})}>View All Items</button>
-          </Shops>
-        </Grid>
-))
+      <Shops>
+        <img src={shopImage} alt="send" />
+        <ShopName>{item.name}</ShopName>
+        <Address>
+          <img src={AddressIcon} height="15px" width="15px" alt="address" />
+          {item.address}
+        </Address>
+        <Rating>
+          <Grid container>
+            <Grid item sm={6} xs={6}>
+              <StarImages />
+            </Grid>
+            <Grid item sm={6} xs={6}>
+              {item.review}
+            </Grid>
+          </Grid>
+        </Rating>
+
+        <button
+          type="button"
+          style={{
+            padding: "5px",
+            marginTop: "5px",
+            width: "200px",
+            backgroundColor: "#43B028",
+            border: 0,
+            borderRadius: "30px",
+          }}
+          onClick={() => navigate("/products", { state: { shopId: item.id } })}
+        >
+          View All Items
+        </button>
+      </Shops>
+    </Grid>
+  ));
 
   return (
     <Grid container sx={{ ...gridContainer }}>
@@ -234,7 +265,7 @@ function Default() {
       </Grid>
 
       <Grid container spacing={2} sx={{ marginTop: "10px" }}>
-      { ShopList }
+        {ShopList}
         {/* <Grid item xs={12} sm={3}>
         <Shops>
             <img src={ShopImage} alt="send" />
