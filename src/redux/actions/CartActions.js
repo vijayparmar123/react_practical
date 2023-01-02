@@ -1,7 +1,7 @@
 // import callApi from '../api'
 export const INCREASE_QUANTITY = 'INCREASE_QUANTITY';
 export const DECREASE_QUANTITY = 'DECREASE_QUANTITY';
-export const GET_ALL_PRODUCT = 'GET_ALL_PRODUCT';
+// export const GET_ALL_PRODUCT = 'GET_ALL_PRODUCT';
 export const GET_NUMBER_CART = 'GET_NUMBER_CART';
 export const ADD_CART = 'ADD_CART' ;
 export const UPDATE_CART = 'UPDATE_CART';
@@ -17,12 +17,12 @@ export const actFetchProductsRequest = () => {
 }
 
 /*GET_ALL_PRODUCT*/
-export function GetAllProduct(payload){
-    return{
-        type:'GET_ALL_PRODUCT',
-        payload
-    }
-}
+// export function GetAllProduct(payload){
+//     return{
+//         type:'GET_ALL_PRODUCT',
+//         payload
+//     }
+// }
 
 /*GET NUMBER CART*/
 export function GetNumberCart(){

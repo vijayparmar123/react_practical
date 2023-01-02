@@ -10,7 +10,9 @@ import { Box, styled, useTheme } from '@mui/system';
 // import { sideNavWidth, topBarHeight } from 'app/utils/constant';
 import { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
+
+import { IncreaseQuantity, DecreaseQuantity, DeleteCart } from "../redux/actions/CartActions";
 // import { themeShadows } from './MatxTheme/themeColors';
 // import { H6, Small } from './Typography';
 
@@ -27,7 +29,7 @@ const MiniCart = styled('div')(({ theme }) => ({
   height: '100%',
   display: 'flex',
   flexDirection: 'column',
-  width: sideNavWidth,
+  width: "200px",
 }));
 
 const CartBox = styled('div')(() => ({
@@ -35,8 +37,9 @@ const CartBox = styled('div')(() => ({
   paddingLeft: '16px',
   display: 'flex',
   alignItems: 'center',
-  boxShadow: themeShadows[6],
-  height: topBarHeight,
+  // boxShadow: themeShadows[6],
+  // height: topBarHeight,
+  height: "10px",
   '& h5': {
     marginTop: 0,
     marginBottom: 0,
@@ -81,34 +84,43 @@ function ShoppingCart({ container }) {
   const [totalCost, setTotalCost] = useState(0);
   const [panelOpen, setPanelOpen] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // const { user } = useAuth();
-  const { cartList } = useSelector((state) => state.shops);
+  const cartList = useSelector((state) => state.cart);
+  console.log("cart");
+  console.log(cartList);
   // const { settings } = useSettings();
   // const theme = useTheme();
   // const secondary = theme.palette.text.secondary;
 
-  if (!cartListLoaded) {
-    dispatch(getCartList(user.id));
-    cartListLoaded = true;
-  }
+  // if (!cartListLoaded) {
+  //   dispatch(getCartList(user.id));
+  //   cartListLoaded = true;
+  // }
 
   const handleDrawerToggle = () => {
     setPanelOpen(!panelOpen);
   };
 
-  const handleCheckoutClick = () => {
-    if (totalCost > 0) {
-      navigate('/ecommerce/checkout');
-      setPanelOpen(false);
-    }
-  };
+  // const handleCheckoutClick = () => {
+  //   if (totalCost > 0) {
+  //     navigate('/ecommerce/checkout');
+  //     setPanelOpen(false);
+  //   }
+  // };
+  
+  let ListCart = [];
+    let TotalCart=0;
+    Object.keys(cartList.Carts).forEach(function(item){
+        TotalCart+=cartList.Carts[item].quantity * cartList.Carts[item].price;
+        ListCart.push(cartList.Carts[item]);
+    });
 
   useEffect(() => {
     let total = 0;
 
-    cartList.forEach((product) => {
-      total += product.price * product.amount;
+    cartList.carts.forEach((product) => {
+      total += product.price * product.quantity;
     });
     setTotalCost(total);
   }, [cartList]);
@@ -119,8 +131,8 @@ function ShoppingCart({ container }) {
   return (
     <Fragment>
       <IconButton onClick={handleDrawerToggle}>
-        <Badge color="secondary" badgeContent={cartList.length}>
-          <Icon sx={{ color: textColor }}>shopping_cart</Icon>
+        <Badge color="black" badgeContent={cartList.numberCart}>
+          <Icon sx={{ color: "black" }}>shopping_cart</Icon>
         </Badge>
       </IconButton>
 
@@ -142,13 +154,13 @@ function ShoppingCart({ container }) {
             </CartBox>
 
             <Box flexGrow={1} overflow="auto">
-              {cartList.map((product) => (
+              {ListCart.map((product,key) => (
                 <ProductBox key={product.id}>
                   <Box mr="4px" display="flex" flexDirection="column">
                     <StyledIconButton
                       size="small"
                       onClick={() =>
-                        dispatch(updateCartAmount(user.id, product.id, product.amount + 1))
+                        dispatch(IncreaseQuantity(key))
                       }
                     >
                       <Icon sx={{ cursor: 'pinter' }}>keyboard_arrow_up</Icon>
@@ -157,7 +169,7 @@ function ShoppingCart({ container }) {
                       disabled={!(product.amount - 1)}
                       size="small"
                       onClick={() =>
-                        dispatch(updateCartAmount(user.id, product.id, product.amount - 1))
+                        dispatch(DecreaseQuantity(key))
                       }
                     >
                       <Icon id={!(product.amount - 1) && 'disable'}>keyboard_arrow_down</Icon>
@@ -167,14 +179,14 @@ function ShoppingCart({ container }) {
                     <IMG src={product.imgUrl} alt={product.title} />
                   </Box>
                   <ProductDetails>
-                    <H6>{product.title}</H6>
-                    <Small sx={{ color: secondary }}>
+                    <h6>{product.title}</h6>
+                    <Box sx={{ color: "black" }}>
                       ${product.price} x {product.amount}
-                    </Small>
+                    </Box>
                   </ProductDetails>
                   <StyledIconButton
                     size="small"
-                    onClick={() => dispatch(deleteProductFromCart(user.userId, product.id))}
+                    onClick={() => dispatch(DeleteCart(key))}
                   >
                     <Icon fontSize="small">clear</Icon>
                   </StyledIconButton>
@@ -186,7 +198,6 @@ function ShoppingCart({ container }) {
               sx={{ width: '100%', borderRadius: 0 }}
               variant="contained"
               color="primary"
-              onClick={handleCheckoutClick}
             >
               Checkout (${totalCost.toFixed(2)})
             </Button>

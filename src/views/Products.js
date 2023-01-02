@@ -12,12 +12,14 @@ import ShopImage from "../assets/images/shops/shop.svg";
 import AddressIcon from "../assets/images/shops/address.svg";
 import StarIcon from "../assets/images/product/whiteStar.svg";
 
+import { useDispatch, useSelector } from 'react-redux';
+import { AddCart } from "../redux/actions/CartActions";
+
 import { useLocation } from "react-router-dom";
 
 import { alpha } from "@mui/material/styles";
 
 import InputBase from "@mui/material/InputBase";
-import { useSelector } from "react-redux";
 import { useState } from "react";
 
 const gridContainer = {
@@ -166,8 +168,12 @@ const StarImages = () => {
 function Products() {
   const location = useLocation();
   const paramShopId = location.state.shopId;
+  const dispatch = useDispatch();
 
   const shops = useSelector((state) => state.shops);
+  const cart = useSelector((state) => state.cart);
+  // console.log("cart");
+  // console.log(cart);
 
   const selectedShop = shops.shops.find((shop) => {
     return shop.id === paramShopId;
@@ -187,7 +193,7 @@ function Products() {
         <Price>
           <Grid container>
             <Grid item sm={6} xs={6}>
-              {product.price}
+             {'$'}{product.price}
             </Grid>
             <Grid item sm={6} xs={6}>
             {product.perkg}
@@ -205,6 +211,7 @@ function Products() {
             border: 0,
             borderRadius: "30px",
           }}
+          onClick={()=>dispatch(AddCart(product))}
         >
           Add to cart
         </button>
