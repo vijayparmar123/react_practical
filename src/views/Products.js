@@ -1,34 +1,17 @@
-import {
-  Grid,
-  TextField,
-  Box,
-  styled,
-  InputAdornment,
-  Button,
-  Paper,
-} from "@mui/material";
-import BackgroundImage from "../assets/images/product/background.svg";
-import ShopImage from "../assets/images/shops/shop.svg";
-import AddressIcon from "../assets/images/shops/address.svg";
-import StarIcon from "../assets/images/product/whiteStar.svg";
-
-import { useDispatch, useSelector } from 'react-redux';
-import { AddCart } from "../redux/actions/CartActions";
-
+import { Grid, Box, styled, Button, Paper } from "@mui/material";
 import { useLocation } from "react-router-dom";
-
-import { alpha } from "@mui/material/styles";
-
-import InputBase from "@mui/material/InputBase";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AddCart } from "../redux/actions/CartActions";
+import StarIcon from "../assets/images/product/whiteStar.svg";
+import BackgroundImage from "../assets/images/product/background.svg";
 
 const gridContainer = {
   height: "100%",
 };
 
 const ContentBox = styled(Box)(() => ({
-  display: "-moz-box",
-  display: "-webkit-flex",
+  // display: "-moz-box",
+  // display: "-webkit-flex",
   display: "flex",
   flexDirection: "column",
   height: "100%",
@@ -36,52 +19,6 @@ const ContentBox = styled(Box)(() => ({
   alignItems: "center",
   justifyContent: "center",
   // padding: '0 23%',
-}));
-
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  fontSize: "16px",
-  fontWeight: "400",
-  color: "#070606",
-  marginLeft: 0,
-  borderRadius: "30px",
-  background: "#FFFFFF",
-  boxShadow: "0px 5px 10px rgba(7, 6, 6, 0.06)",
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
 }));
 
 const InputWithButton = styled("div")(({ theme }) => ({
@@ -102,21 +39,10 @@ const SearchButton = styled("button")(({ theme }) => ({
   borderRadius: "0 20px 20px 0",
 }));
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: "#FFFFFF",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  fontSize: "16px",
-  fontWeight: "600",
-  padding: "10px 0",
-  color: theme.palette.text.secondary,
-}));
-
 const Product = styled(Paper)(({ theme }) => ({
   backgroundColor: "#FFFFFF",
   ...theme.typography.body2,
-  padding: theme.spacing(1),
+  // padding: theme.spacing(1),
   textAlign: "center",
   fontSize: "16px",
   fontWeight: "600",
@@ -135,14 +61,6 @@ const Price = styled("div")(({ theme }) => ({
   width: "100%",
   marginTop: "5px",
   color: "#070606",
-  fontSize: "16px",
-  fontWeight: "400",
-}));
-
-const Rating = styled("div")(({ theme }) => ({
-  width: "100%",
-  marginTop: "5px",
-  color: "rgba(7, 6, 6, 0.7);",
   fontSize: "16px",
   fontWeight: "400",
 }));
@@ -171,9 +89,6 @@ function Products() {
   const dispatch = useDispatch();
 
   const shops = useSelector((state) => state.shops);
-  const cart = useSelector((state) => state.cart);
-  // console.log("cart");
-  // console.log(cart);
 
   const selectedShop = shops.shops.find((shop) => {
     return shop.id === paramShopId;
@@ -184,19 +99,16 @@ function Products() {
   const ProductList = selectedShop.products.map((product) => (
     <Grid item xs={12} sm={3} key={product.id}>
       <Product>
-        <img src={ShopImage} alt="send" />
+        <img src={product.image} alt="product" />
         <ProductName>{product.name}</ProductName>
-        {/* <Price>
-          <img src={AddressIcon} height="15px" width="15px" alt="address" />
-          Castle Hill, NSW AU 2154
-        </Price> */}
         <Price>
           <Grid container>
             <Grid item sm={6} xs={6}>
-             {'$'}{product.price}
+              {"$"}
+              {product.price}
             </Grid>
             <Grid item sm={6} xs={6}>
-            {product.perkg}
+              {product.perkg}
             </Grid>
           </Grid>
         </Price>
@@ -210,8 +122,9 @@ function Products() {
             backgroundColor: "#43B028",
             border: 0,
             borderRadius: "30px",
+            cursor:'pointer'
           }}
-          onClick={()=>dispatch(AddCart(product))}
+          onClick={() => dispatch(AddCart(product))}
         >
           Add to cart
         </button>
